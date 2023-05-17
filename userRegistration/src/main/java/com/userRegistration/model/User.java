@@ -1,13 +1,12 @@
 package com.userRegistration.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "user_profile")
+@Document("user_profile")
 public class User {
 	
 	@Id
