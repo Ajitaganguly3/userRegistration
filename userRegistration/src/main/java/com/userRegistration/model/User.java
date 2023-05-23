@@ -67,6 +67,5 @@ public class User {
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
-	
 
 }
