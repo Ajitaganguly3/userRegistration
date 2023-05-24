@@ -1,78 +1,33 @@
 package com.userRegistration.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.Data;
 
-
+@Data
 @Document("user_profile")
 public class User {
 	
 	@Id
 	public String loginId;
-	@NotBlank
+	@NotNull
 	public String firstName;
-	@NotBlank
+	@NotNull
 	public String lastName;
-	@NotBlank
-	@Email
+	@NotNull
 	public String email;
-	@NotBlank
+	@NotNull
 	public String password;
-	@NotBlank
+	@NotNull
 	public String confirmPassword;
-	@NotBlank
+	@NotNull
 	public String contactNo;
 	
-	public String getLoginId() {
-		return loginId;
-	}
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-	public String getContactNo() {
-		return contactNo;
-	}
-	public void setContactNo(String contactNo) {
-		this.contactNo = contactNo;
-	}
+	public boolean isLocked;
+	public boolean isAdmin;
 	
-	private List<Role> roles = new ArrayList<>();
 
 }
