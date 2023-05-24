@@ -1,5 +1,8 @@
 package com.userRegistration.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -69,5 +72,7 @@ public class User {
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
+	
+	private List<Role> roles = new ArrayList<>();
 
 }

@@ -8,6 +8,13 @@ import org.springframework.stereotype.Service;
 import com.userRegistration.dto.UserProfileDTO;
 import com.userRegistration.model.User;
 import com.userRegistration.repository.LoginRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.userRegistration.model.User;
+import com.userRegistration.repository.LoginRepository;
+import com.userRegistration.util.JWTUtil;
 
 @Service
 public class UserProfileServiceImpl {
@@ -15,33 +22,39 @@ public class UserProfileServiceImpl {
 	@Autowired
 	private LoginRepository loginRepository;
 	
+	@Autowired
+	private JWTUtil jwtUtil;
 	
-	public UserProfileDTO getUserByLoginId(String loginId) {
-		
-		User user = loginRepository.findByLoginId(loginId);
-		
-		if(user == null) {
-			System.out.println("User not found: " + loginId);
-		
-		}
-		else {
-			System.out.println("User found: " + user.getLoginId());
-			return transformIntoUserEntity(user);
-		}
-		return null;		
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
-	private UserProfileDTO transformIntoUserEntity(User user) {
-		UserProfileDTO userProfileDTO = new UserProfileDTO();
-		userProfileDTO.setLoginId(user.getLoginId());
-		userProfileDTO.setFirstName(user.getFirstName());
-		userProfileDTO.setLastName(user.getLastName());
-		userProfileDTO.setPassword(user.getPassword());
-		userProfileDTO.setConfirmPassword(user.getConfirmPassword());
-		userProfileDTO.setEmail(user.getEmail());
-		userProfileDTO.setContactNo(user.getContactNo());
+	@Autowired
+	private UserDetails userDetails;
+	
+	public String getUserByLoginId(String loginId, String password) {
 		
-		return userProfileDTO;
+		java.util.Optional<User> userOptional = loginRepository.findByLoginId(loginId);
+		
+		if(userOptional.isPresent()) {
+			User user = userOptional.get();
+			
+			if(!passwordEncoder.matches(password, user.getPassword())) {
+				return null;
+			}
+			
+			if(user.isLocked()) {
+				return null;
+			}
+			
+			String token = jwtUtil.generateToken(userDetails);
+			
+			System.out.println("JWT Token: " + token);
+			
+			System.out.println("end generateToken");
+			
+			return token;
+		}
+		return null;
 	}
 
 }

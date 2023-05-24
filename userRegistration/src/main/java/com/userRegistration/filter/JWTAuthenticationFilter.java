@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+import com.userRegistration.service.UserProfileServiceImpl;
 import com.userRegistration.util.JWTUtil;
 
 
