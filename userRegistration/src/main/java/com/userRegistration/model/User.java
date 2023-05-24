@@ -1,10 +1,12 @@
 package com.userRegistration.model;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+
 
 @Document("user_profile")
 public class User {
